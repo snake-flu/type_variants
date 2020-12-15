@@ -25,7 +25,7 @@ Any `aa` lines should consist of a `:`-separated string whose first part is "aa"
 
 For `snp` and `aa` lines, if the reference allele does not match the allele at the specified coordinates in the reference fasta file, the program will write an error to stderr and exit.
 
-####To run the program:
+#### To run the program:
 
 ```
 python3 type_variants.py --fasta-in query.fasta --variants-config config.csv --reference MN908947.fa --variants-out out.csv
@@ -57,7 +57,7 @@ seq9,0,9,0,1.0
 
 `fraction_alt = alt_count / (ref_count + alt_count + other_count)`
 
-####Appending genotypes to the output
+#### Appending genotypes to the output
 
 You can also append the genotype of each variant in the config file to the output with the `--append-genotypes` flag:
 
