@@ -62,7 +62,7 @@ seq9,0,9,0,1.0
 You can also append the genotype of each variant in the config file to the output with the `--append-genotypes` flag:
 
 ```
-python3 type_variants.py --fasta-in B.1.1.7.fasta --variants-config config.csv --reference MN908947.fa --variants-out out.withgenotypes.csv --append-genotypes
+python3 type_variants.py --fasta-in query.fasta --variants-config config.csv --reference MN908947.fa --variants-out out.withgenotypes.csv --append-genotypes
 ```
 
 ```
