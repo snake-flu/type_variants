@@ -37,6 +37,7 @@ def get_nuc_position_from_aa_description(cds, aa_pos):
             parsed_cds = "orf1a"
         else:
             parsed_cds = "orf1b"
+            aa_pos = aa_pos - 4401
     else:
         parsed_cds = cds
 
