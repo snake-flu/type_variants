@@ -32,7 +32,7 @@ def get_nuc_position_from_aa_description(cds, aa_pos):
         sys.stderr.write("please use one of: %s" % ",".join(CDS_dict.keys()))
         sys.exit(1)
 
-    if cds == "orf1ab":
+    if cds.lower() == "orf1ab":
         if aa_pos <= 4401:
             parsed_cds = "orf1a"
         else:
