@@ -107,7 +107,7 @@ def parse_variants_in(csvfilehandle, refseq):
 
             elif lsplit[0] == "del":
                 length = int(lsplit[2])
-                newdelrecord = {"type": lsplit[0], "ref_start": int(lsplit[1]), "length": length, "ref_allele": refseq[int(lsplit[2]) - 1:int(lsplit[2]) + length - 1]}
+                newdelrecord = {"type": lsplit[0], "ref_start": int(lsplit[1]), "length": length, "ref_allele": refseq[int(lsplit[1]) - 1:int(lsplit[1]) + length - 1]}
                 variant_list.append(newdelrecord)
 
             else:
@@ -229,20 +229,3 @@ if __name__ == '__main__':
                   variants_in = args.variants_in,
                   variants_out_handle = args.variants_out,
                   write_all_variants = args.append_genotypes)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#
