@@ -186,10 +186,7 @@ def type_variants(fasta_in, reference, variants_in, variants_out_handle, write_a
             variants_out.write(str(ref_count) + ",")
             variants_out.write(str(alt_count) + ",")
             variants_out.write(str(oth_count) + ",")
-            if alt_count + ref_count + oth_count > 0:
-                variants_out.write(str(round(alt_count / (alt_count + ref_count + oth_count), 4)))
-            else:
-                variants_out.write(str(0))
+            variants_out.write(str(round(alt_count / (alt_count + ref_count + oth_count), 4)))
 
             if write_all_variants:
                 variants_out.write(",")
