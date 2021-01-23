@@ -71,7 +71,7 @@ def parse_variants_in(csvfilehandle, refseq):
 
     with open(csvfilehandle, "r") as f:
         for line in f:
-            l = line.strip()
+            l = line.split("#")[0].strip() # remove comments from the line
             lsplit = l.split(":")
 
             if lsplit[0] == "snp":
@@ -98,7 +98,7 @@ def parse_variants_in(csvfilehandle, refseq):
                 ref_start = get_nuc_position_from_aa_description(cds, AA_pos)
                 ref_allele_check = refseq[ref_start - 1:ref_start + 2].translate()
 
-                if ref_allele != ref_allele_check:
+                if ref_allele != '?' and ref_allele != ref_allele_check:
                     sys.stderr.write("variants file says reference amino acid in CDS %s at position %d is %s, but reference sequence has %s" %(cds, AA_pos, ref_allele, ref_allele_check))
                     sys.exit(1)
 
