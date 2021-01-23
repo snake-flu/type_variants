@@ -1,0 +1,46 @@
+aa:ORF1ab:T1001I
+aa:ORF1ab:S1188L	# P.1
+aa:ORF1ab:K1655N	# B.1.351 
+aa:ORF1ab:A1708D
+aa:ORF1ab:K1796Q	# P.1
+aa:ORF1ab:I2230T 
+aa:ORF1ab:E5665D	# P.1
+del:11288:9			# B.1.1.7 / B.1.351 / P.1
+aa:s:L18F			# B.1.351 / P.1
+aa:s:T20N			# P.1
+aa:s:P26S			# P.1
+del:21765:6
+aa:s:D80A			# B.1.351
+aa:s:D138Y			# P.1
+del:21991:3
+aa:s:R190S			# P.1
+aa:s:D215G			# B.1.351
+del:L242:6			# B.1.351
+aa:s:R246I			# B.1.351
+aa:s:K417			# B.1.351 N / P.1 T
+aa:s:E484K			# B.1.351 / P.1
+aa:s:N501Y			# B.1.1.7 / B.1.351 / P.1
+aa:s:A570D
+aa:s:H655Y			# P.1
+aa:s:P681H
+aa:s:A701V			# B.1.351
+aa:s:T716I
+aa:s:S982A
+aa:s:T1027I			# P.1
+aa:s:D1118H
+aa:E:P71L			# B.1.351
+aa:ORF8:Q27*
+aa:ORF8:R52I
+aa:ORF8:Y73C
+aa:ORF8:E92K		# P.1
+aa:N:D3L
+aa:N:N80R			# P.1
+aa:N:T205I			# B.1.351
+aa:N:S235F
+
+
+
+
+
+
+
