@@ -72,47 +72,48 @@ def parse_variants_in(csvfilehandle, refseq):
     with open(csvfilehandle, "r") as f:
         for line in f:
             l = line.split("#")[0].strip() # remove comments from the line
-            lsplit = l.split(":")
+            if len(l) > 0: # skip blank lines (or comment only lines)
+				lsplit = l.split(":")
 
-            if lsplit[0] == "snp":
-                type = lsplit[0]
-                ref_allele = lsplit[1][0]
-                ref_start = int(lsplit[1][1:-1])
-                alt_allele = lsplit[1][-1]
-                ref_allele_check = refseq[ref_start - 1]
+				if lsplit[0] == "snp":
+					type = lsplit[0]
+					ref_allele = lsplit[1][0]
+					ref_start = int(lsplit[1][1:-1])
+					alt_allele = lsplit[1][-1]
+					ref_allele_check = refseq[ref_start - 1]
 
-                if ref_allele != ref_allele_check:
-                    sys.stderr.write("variants file says reference nucleotide at position %d is %s, but reference sequence has %s" %(ref_start, ref_allele, ref_allele_check))
-                    sys.exit(1)
+					if ref_allele != '?' and ref_allele != ref_allele_check:
+						sys.stderr.write("variants file says reference nucleotide at position %d is %s, but reference sequence has %s" %(ref_start, ref_allele, ref_allele_check))
+						sys.exit(1)
 
-                newsnprecord = {"type": type, "ref_start": ref_start, "ref_allele": ref_allele, "alt_allele": alt_allele}
-                variant_list.append(newsnprecord)
+					newsnprecord = {"type": type, "ref_start": ref_start, "ref_allele": ref_allele, "alt_allele": alt_allele}
+					variant_list.append(newsnprecord)
 
-            elif lsplit[0] == "aa":
-                type = lsplit[0]
-                cds = lsplit[1]
-                ref_allele = lsplit[2][0]
-                AA_pos = int(lsplit[2][1:-1])
-                alt_allele = lsplit[2][-1]
+				elif lsplit[0] == "aa":
+					type = lsplit[0]
+					cds = lsplit[1]
+					ref_allele = lsplit[2][0]
+					AA_pos = int(lsplit[2][1:-1])
+					alt_allele = lsplit[2][-1]
 
-                ref_start = get_nuc_position_from_aa_description(cds, AA_pos)
-                ref_allele_check = refseq[ref_start - 1:ref_start + 2].translate()
+					ref_start = get_nuc_position_from_aa_description(cds, AA_pos)
+					ref_allele_check = refseq[ref_start - 1:ref_start + 2].translate()
 
-                if ref_allele != '?' and ref_allele != ref_allele_check:
-                    sys.stderr.write("variants file says reference amino acid in CDS %s at position %d is %s, but reference sequence has %s" %(cds, AA_pos, ref_allele, ref_allele_check))
-                    sys.exit(1)
+					if ref_allele != '?' and ref_allele != ref_allele_check:
+						sys.stderr.write("variants file says reference amino acid in CDS %s at position %d is %s, but reference sequence has %s" %(cds, AA_pos, ref_allele, ref_allele_check))
+						sys.exit(1)
 
-                newaarecord = {"type": type, "cds": cds, "ref_start": ref_start, "ref_allele": ref_allele, "alt_allele": alt_allele}
-                variant_list.append(newaarecord)
+					newaarecord = {"type": type, "cds": cds, "ref_start": ref_start, "ref_allele": ref_allele, "alt_allele": alt_allele}
+					variant_list.append(newaarecord)
 
-            elif lsplit[0] == "del":
-                length = int(lsplit[2])
-                newdelrecord = {"type": lsplit[0], "ref_start": int(lsplit[1]), "length": length, "ref_allele": refseq[int(lsplit[1]) - 1:int(lsplit[1]) + length - 1]}
-                variant_list.append(newdelrecord)
+				elif lsplit[0] == "del":
+					length = int(lsplit[2])
+					newdelrecord = {"type": lsplit[0], "ref_start": int(lsplit[1]), "length": length, "ref_allele": refseq[int(lsplit[1]) - 1:int(lsplit[1]) + length - 1]}
+					variant_list.append(newdelrecord)
 
-            else:
-                sys.stderr.write("couldn't parse the following line in the config file: %s" % line)
-                sys.exit()
+				else:
+					sys.stderr.write("couldn't parse the following line in the config file: %s" % line)
+					sys.exit()
 
     return(variant_list)
 
