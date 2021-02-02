@@ -1,5 +1,5 @@
 aa:ORF1ab:S1188L
-aa:ORF1ab:K1796Q
+aa:ORF1ab:Y1796Q
 del:11288:9
 aa:ORF1ab:E5665D
 aa:s:L18F
@@ -13,4 +13,4 @@ aa:s:N501Y
 aa:s:H655Y
 aa:s:T1027I
 aa:ORF8:E92K
-aa:N:N80R
+aa:N:P80R
