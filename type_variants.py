@@ -113,7 +113,7 @@ def parse_variants_in(csvfilehandle, refseq):
 
                 else:
                     sys.stderr.write("couldn't parse the following line in the config file: %s\n" % line)
-                    sys.exit()
+                    sys.exit(1)
 
     return(variant_list)
 
@@ -133,6 +133,10 @@ def type_variants(fasta_in, reference, variants_in, variants_out_handle, write_a
 
     with open(fasta_in, "r") as f:
         for record in SeqIO.parse(f, "fasta"):
+            if len(record.seq) != 29903:
+                sys.stderr.write("The fasta record for %s isn't 29903bp long, is this fasta file aligned to Wuhan-Hu-1?\n" % record.id)
+                sys.exit(1)
+
             ref_count = 0
             alt_count = 0
             oth_count = 0
@@ -141,7 +145,7 @@ def type_variants(fasta_in, reference, variants_in, variants_out_handle, write_a
 
             for var in variant_list:
                 if var["type"] == "snp":
-                    query_allele = record.seq[var["ref_start"] - 1]
+                    query_allele = record.seq.upper()[var["ref_start"] - 1]
                     if query_allele == var["ref_allele"]:
                         ref_count += 1
                     elif query_allele == var["alt_allele"]:
@@ -154,7 +158,7 @@ def type_variants(fasta_in, reference, variants_in, variants_out_handle, write_a
 
                 if var["type"] == "aa":
                     try:
-                        query_allele = record.seq[var["ref_start"] - 1:var["ref_start"] + 2].translate()
+                        query_allele = record.seq.upper()[var["ref_start"] - 1:var["ref_start"] + 2].translate()
                     except:
                         oth_count += 1
                         alleles_list.append("X")
@@ -171,7 +175,7 @@ def type_variants(fasta_in, reference, variants_in, variants_out_handle, write_a
 
 
                 if var["type"] == "del":
-                    query_allele = record.seq[var["ref_start"] - 1:var["ref_start"] + var["length"] - 1]
+                    query_allele = record.seq.upper()[var["ref_start"] - 1:var["ref_start"] + var["length"] - 1]
                     if query_allele == var["ref_allele"]:
                         ref_count += 1
                         alleles_list.append("ref")
@@ -201,19 +205,24 @@ def type_variants(fasta_in, reference, variants_in, variants_out_handle, write_a
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="""type an alignment in Wuhan-Hu-1 coordinates for variants defined in a config file""",
+    parser = argparse.ArgumentParser(description="""Type an alignment in Wuhan-Hu-1 coordinates for variants defined in a config file
+
+If you have a consensus fasta file containing sequences that haven't been aligned to Wuhan-Hu-1, you can make an alignment to feed to this python script using minimap2, the latest version of gofasta and the reference fasta file:
+
+minimap2 -a -x asm5 MN908947.fa unaligned.fasta | gofasta sam toMultiAlign --reference MN908947.fa > aligned.fasta
+""",
                                     formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('--fasta-in', dest = 'fasta_in', help='alignment to type, in fasta format')
     parser.add_argument('--variants-config', dest = 'variants_in', help="""config file containing variants to type. Format is like:
 
-                                                    snp:T6954C
-                                                    del:11288:9
-                                                    aa:orf1ab:T1001I
+            snp:T6954C
+            del:11288:9
+            aa:orf1ab:T1001I
 
-                                                    snp and del positions are 1-based nucleotide position relative to the alignment
-                                                    aa position is 1-based codon position relative to the cds
+snp and del positions are 1-based nucleotide position relative to the alignment
+aa position is 1-based codon position relative to the cds
 
-    No header line or comment lines are permitted""")
+No header line or comment lines are permitted""")
     parser.add_argument('--reference', help='Wuhan-Hu-1 in fasta format (for typing the reference allele at deletions and sanity checking the config file)')
     parser.add_argument('--variants-out', dest = 'variants_out', help='csv file to write')
     parser.add_argument('--append-genotypes', dest = 'append_genotypes', action = 'store_true', help='if invoked, write the genotype for each variant in the config file to the output')

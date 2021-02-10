@@ -1,6 +1,6 @@
 # type_variants
 
-A python script to type predefined variants in a fasta-format alignment of SARS-CoV-2 sequences, which must be aligned to Wuhan-Hu-1. See the [Genbank entry](https://www.ncbi.nlm.nih.gov/nuccore/MN908947.3) and the file `MN908947.fa` in this repository.
+A python script to type predefined variants in a fasta-format alignment of SARS-CoV-2 sequences, which **must be aligned to Wuhan-Hu-1**. See the [Genbank entry](https://www.ncbi.nlm.nih.gov/nuccore/MN908947.3) and the file `MN908947.fa` in this repository.
 
 Pull requests welcome!
 
@@ -88,6 +88,8 @@ For deletions, `X` denotes an allele that is neither the reference allele nor th
 
 ### Making an alignment in Wuhan-Hu-1 coordinates
 
-If you have a consensus fasta file(s) containing sequences that haven't been aligned to Wuhan-Hu-1, you can make an alignment to feed to this python script using [minimap2](https://github.com/lh3/minimap2), [gofasta](https://github.com/cov-ert/gofasta) and the reference fasta file:
+If you have a consensus fasta file containing sequences that haven't been aligned to Wuhan-Hu-1, you can make an alignment to feed to this python script using [minimap2](https://github.com/lh3/minimap2), the latest version of [gofasta](https://github.com/cov-ert/gofasta) and the reference fasta file:
 
-`minimap2 -a -x asm5 MN908947.fa unaligned.fasta | gofasta sam toMultiAlign --reference MN908947.fa > aligned.fasta`
+`minimap2 -a -x asm5 MN908947.fa unaligned.fasta | gofasta sam toMultiAlign > aligned.fasta`
+
+Or potentially using [MAFFT](https://mafft.cbrc.jp/alignment/software/closelyrelatedviralgenomes.html) with the `--keeplength` option ("Keep alignment length" in the web app).
