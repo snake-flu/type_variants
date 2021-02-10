@@ -113,7 +113,7 @@ def parse_variants_in(csvfilehandle, refseq):
 
                 else:
                     sys.stderr.write("couldn't parse the following line in the config file: %s\n" % line)
-                    sys.exit()
+                    sys.exit(1)
 
     return(variant_list)
 
@@ -141,7 +141,7 @@ def type_variants(fasta_in, reference, variants_in, variants_out_handle, write_a
 
             for var in variant_list:
                 if var["type"] == "snp":
-                    query_allele = record.seq[var["ref_start"] - 1]
+                    query_allele = record.seq.upper()[var["ref_start"] - 1]
                     if query_allele == var["ref_allele"]:
                         ref_count += 1
                     elif query_allele == var["alt_allele"]:
@@ -154,7 +154,7 @@ def type_variants(fasta_in, reference, variants_in, variants_out_handle, write_a
 
                 if var["type"] == "aa":
                     try:
-                        query_allele = record.seq[var["ref_start"] - 1:var["ref_start"] + 2].translate()
+                        query_allele = record.seq.upper()[var["ref_start"] - 1:var["ref_start"] + 2].translate()
                     except:
                         oth_count += 1
                         alleles_list.append("X")
@@ -171,7 +171,7 @@ def type_variants(fasta_in, reference, variants_in, variants_out_handle, write_a
 
 
                 if var["type"] == "del":
-                    query_allele = record.seq[var["ref_start"] - 1:var["ref_start"] + var["length"] - 1]
+                    query_allele = record.seq.upper()[var["ref_start"] - 1:var["ref_start"] + var["length"] - 1]
                     if query_allele == var["ref_allele"]:
                         ref_count += 1
                         alleles_list.append("ref")
