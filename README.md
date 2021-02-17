@@ -1,8 +1,8 @@
 # type_variants
 
-A python script to type predefined variants in a fasta-format alignment of SARS-CoV-2 sequences, which **must be aligned to Wuhan-Hu-1**. See the [Genbank entry](https://www.ncbi.nlm.nih.gov/nuccore/MN908947.3) and the file `MN908947.fa` in this repository.
+A python script to type predefined variants in a fasta-format alignment of SARS-CoV-2 sequences, which **must be aligned to Wuhan-Hu-1** (discarding any insertions relative to it). Instructions for making an alignment are at the end of this README. See also the [Genbank entry](https://www.ncbi.nlm.nih.gov/nuccore/MN908947.3) and the file `MN908947.fa` in this repository.
 
-Pull requests welcome!
+Frame-shifting mutations in coding sequence are not accounted for by this routine.
 
 ## Usage
 
