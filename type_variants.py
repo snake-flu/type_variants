@@ -97,7 +97,7 @@ def parse_variants_in(csvfilehandle, refseq):
                     alt_allele = lsplit[2][-1]
 
                     ref_start = get_nuc_position_from_aa_description(cds, AA_pos)
-                    ref_allele_check = refseq[ref_start - 1:ref_start + 2].translate()
+                    ref_allele_check = refseq[ref_start - 1:ref_start + 2].translate(gap='-')
 
                     if ref_allele != '?' and ref_allele != ref_allele_check:
                         sys.stderr.write("variants file says reference amino acid in CDS %s at position %d is %s, but reference sequence has %s\n" %(cds, AA_pos, ref_allele, ref_allele_check))
@@ -158,7 +158,7 @@ def type_variants(fasta_in, reference, variants_in, variants_out_handle, write_a
 
                 if var["type"] == "aa":
                     try:
-                        query_allele = record.seq.upper()[var["ref_start"] - 1:var["ref_start"] + 2].translate()
+                        query_allele = record.seq.upper()[var["ref_start"] - 1:var["ref_start"] + 2].translate(gap='-')
                     except:
                         oth_count += 1
                         alleles_list.append("X")

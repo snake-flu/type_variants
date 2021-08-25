@@ -4,12 +4,12 @@ import os
 import pkg_resources
 
 setup(name='type_variants',
-      version=1.0,
+      version=1.1,
       packages=find_packages(),
       scripts=['type_variants.py',
                 ],
       install_requires=[
-            "biopython>=1.70",
+            "biopython>=1.78",
         ],
       description='Sars-Cov-2 variant typing command line tool',
       url='https://github.com/cov-ert/type_variants',

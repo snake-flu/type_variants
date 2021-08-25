@@ -82,7 +82,7 @@ seq9,0,9,0,1.0,T,del,I,del,C,Y,G,*,F
 
 Each genotype column contains the allele for that variant in each query sequence.
 
-For amino acids, `X` denotes missing data/an untranslatable codon
+For amino acids, `X` denotes an untranslatable codon. `-` denotes a codon that consists entirely of an alignment gap (`---`).
 
 For deletions, `X` denotes an allele that is neither the reference allele nor the deletion. Deletion variants are otherwise coded as `ref` (same nucleotide sequence as the reference) or `del`.
 
